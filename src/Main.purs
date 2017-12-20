@@ -7,10 +7,11 @@ import Control.Monad.Aff.AVar (makeVar')
 import Control.Monad.State.Trans (evalStateT)
 import Data.StrMap (empty)
 import Data.Tuple (Tuple(..))
-import Presto.Core.Flow (APIRunner, PermissionCheckRunner, PermissionRunner(PermissionRunner), PermissionTakeRunner, Flow)
+import Presto.Core.Flow (APIRunner, Flow, PermissionCheckRunner, PermissionRunner(PermissionRunner), PermissionTakeRunner, runUI)
 import Presto.Core.Language.Runtime.Interpreter (Runtime(..), UIRunner, run)
 import Presto.Core.Types.Permission (PermissionStatus(..))
 import Runner (callAPI', mkNativeRequest, showUI')
+import Types (MainScreen(..), MainScreenState(..))
 
 main = do
   let runtime = Runtime uiRunner (PermissionRunner permissionCheckRunner permissionTakeRunner) apiRunner
@@ -30,4 +31,6 @@ main = do
     permissionTakeRunner perms =  pure $ map (\x -> Tuple x PermissionDeclined) perms
 
 appFlow :: Flow Unit
-appFlow = pure unit
+appFlow = do
+  _ <- runUI (MainScreen MainScreenInit)
+  pure unit
