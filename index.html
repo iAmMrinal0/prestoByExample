@@ -9,6 +9,9 @@
             case "MainScreenInit":
               init();
               break;
+            case "MainScreenAddToList":
+              addToList(state.contents.contents);
+              break;
           }
           break;
       }
@@ -17,12 +20,20 @@
       document.body.innerHTML = `    <div id="todoInput">
         <input type="text" id="todoItem"/>
         <button onclick="addTodo()">Add Todo</button>
+      </div>
+      <div id="todoValues">
       </div>`
     }
     function addTodo() {
       var inputData = document.getElementById('todoItem').value
       var event = {tag: "MainScreenAddTodo", contents:inputData}
       window.callBack(JSON.stringify(event))()
+    }
+    function addToList(todoItem) {
+      var p = document.createElement("p")
+      p.innerHTML = todoItem
+      var div = document.getElementById("todoValues")
+      div.appendChild(p)
     }
     window.showScreen = function (callBack, state) {
       window.callBack = callBack;

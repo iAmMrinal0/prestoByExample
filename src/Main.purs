@@ -10,7 +10,7 @@ import Data.Tuple (Tuple(..))
 import Presto.Core.Flow (APIRunner, Flow, PermissionCheckRunner, PermissionRunner(PermissionRunner), PermissionTakeRunner, runUI)
 import Presto.Core.Language.Runtime.Interpreter (Runtime(..), UIRunner, run)
 import Presto.Core.Types.Permission (PermissionStatus(..))
-import Runner (callAPI', logAny, mkNativeRequest, showUI')
+import Runner (callAPI', mkNativeRequest, showUI')
 import Types (MainScreen(..), MainScreenAction(..), MainScreenState(..))
 
 main = do
@@ -38,4 +38,6 @@ appFlow = do
     _ -> pure unit
 
 addTodoFlow :: String -> Flow Unit
-addTodoFlow todoItem = pure (logAny todoItem)
+addTodoFlow todoItem = do
+  _ <- runUI (MainScreen (MainScreenAddToList todoItem))
+  pure unit

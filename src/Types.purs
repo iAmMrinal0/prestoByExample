@@ -11,7 +11,10 @@ import Presto.Core.Utils.Encoding (defaultDecode, defaultEncode)
 data MainScreen = MainScreen MainScreenState
 
 -- | These are the possible states our MainScreen could be in
-data MainScreenState = MainScreenInit | MainScreenAbort
+data MainScreenState
+  = MainScreenInit
+  | MainScreenAbort
+  | MainScreenAddToList String
 
 -- | Here we list the possible actions from the screen. For now we will just add few dummy actions
 data MainScreenAction = MainScreenAddTodo String | MainScreenAbortAction
