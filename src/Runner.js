@@ -52,3 +52,7 @@ exports["callAPI'"] = function(error) {
     };
   };
 };
+
+exports.logAny = function(data) {
+  console.log(data)
+}

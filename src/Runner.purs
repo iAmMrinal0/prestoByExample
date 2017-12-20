@@ -22,6 +22,7 @@ type AffSuccess s e = (s -> Eff e Unit)
 
 foreign import showUI' :: forall e. (String -> Eff (ui :: UI | e) Unit) ->  String -> (Eff (ui :: UI | e) Unit)
 foreign import callAPI' :: forall e. (AffError e) -> (AffSuccess String e) -> NativeRequest -> Eff e Unit
+foreign import logAny :: forall a. a -> Unit
 
 mkNativeHeader :: Header -> NativeHeader
 mkNativeHeader (Header field val) = { field: field, value: val}

@@ -16,8 +16,13 @@
     function init() {
       document.body.innerHTML = `    <div id="todoInput">
         <input type="text" id="todoItem"/>
-        <button>Add Todo</button>
+        <button onclick="addTodo()">Add Todo</button>
       </div>`
+    }
+    function addTodo() {
+      var inputData = document.getElementById('todoItem').value
+      var event = {tag: "MainScreenAddTodo", contents:inputData}
+      window.callBack(JSON.stringify(event))()
     }
     window.showScreen = function (callBack, state) {
       window.callBack = callBack;

@@ -14,7 +14,7 @@ data MainScreen = MainScreen MainScreenState
 data MainScreenState = MainScreenInit | MainScreenAbort
 
 -- | Here we list the possible actions from the screen. For now we will just add few dummy actions
-data MainScreenAction = MainScreenAction | MainScreenAbortAction
+data MainScreenAction = MainScreenAddTodo String | MainScreenAbortAction
 
 instance interactMainScreen :: Interact Error MainScreen MainScreenAction where
   interact = defaultInteract
