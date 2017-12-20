@@ -1,0 +1,15 @@
+{
+  "name": "todoapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "purescript": "^0.11.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "pulp build --to index.js"
+  },
+  "author": "Mrinal Purohit <mrinal.purohit@juspay.in>",
+  "license": "MIT"
+}

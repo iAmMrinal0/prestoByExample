@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>Presto Example</title>
+    <script type="text/javascript">
+    function handleScreenTag(state) {
+      switch(state.tag) {
+        case "MainScreenInit": init();break;
+      }
+    }
+    function init() {
+      document.body.innerHTML = `    <div id="todoInput">
+        <input type="text" id="todoItem"/>
+        <button>Add Todo</button>
+      </div>`
+    }
+    window.showScreen = function (callBack, state) {
+      window.callBack = callBack;
+      handleScreenTag(state);
+    };
+    </script>
+  </head>
+  <body>
+  </body>
+  <script type="text/javascript" src="index.js"></script>
+</html>
