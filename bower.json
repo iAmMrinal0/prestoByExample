@@ -15,10 +15,6 @@
     "tests"
   ],
   "dependencies": {
-    "purescript-presto": "^0.2.2",
-    "purescript-foreign-generic": "^5.0.0"
-  },
-  "resolutions": {
-    "purescript-foreign-generic": "^5.0.0"
+    "purescript-presto": "^0.2.3"
   }
 }
