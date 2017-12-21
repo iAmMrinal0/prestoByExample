@@ -6,6 +6,7 @@ import Data.Foreign.Generic (defaultOptions, genericEncode)
 import Data.Generic.Rep (class Generic)
 import Presto.Core.Flow (class Interact, defaultInteract)
 import Presto.Core.Utils.Encoding (defaultDecode, defaultEncode)
+import Remote (TodoItem)
 
 -- | This is our screen which takes a state
 data MainScreen = MainScreen MainScreenState
@@ -14,7 +15,7 @@ data MainScreen = MainScreen MainScreenState
 data MainScreenState
   = MainScreenInit
   | MainScreenAbort
-  | MainScreenAddToList String String
+  | MainScreenAddToList TodoItem
 
 -- | Here we list the possible actions from the screen. For now we will just add few dummy actions
 data MainScreenAction = MainScreenAddTodo String | MainScreenAbortAction

@@ -5,13 +5,32 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 
+let todoObj = []
+
 app.get('/', (req, res) => {
-  var date = new Date().toISOString()
-  res.send(JSON.stringify(date))
+  res.send(todoObj)
 })
 
 app.post('/update', (req, res) => {
-  res.send(req.body)
+  let {id, value} = req.body
+  let todoToUpdate = todoObj.filter(todo => todo.id === id)[0]
+  todoToUpdate.value = value
+  res.send(todoToUpdate)
+})
+
+app.post('/delete', (req, res) => {
+  let id = req.body.id
+  todoObj = todoObj.filter(todo => todo.id != id)
+  res.send({})
+})
+
+app.post('/add', (req, res) => {
+  let date = Date.now()
+  let item = req.body.todoItem
+  console.log('this is item: ', item, req.body)
+  let todoValue = {id: date, value: item}
+  todoObj.push(todoValue)
+  res.send(todoValue)
 })
 
 app.get('/error', (req, res) => {

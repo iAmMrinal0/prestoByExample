@@ -36,9 +36,9 @@
     }
     function addToList(todoItem) {
       var div = document.createElement("div")
-      div.id = "todoId" + todoItem[1]
+      div.id = "todoId" + todoItem.id
       var p = document.createElement("p")
-      p.innerHTML = todoItem[0]
+      p.innerHTML = todoItem.value
       var button = document.createElement("button")
       button.innerHTML = "Delete"
       button.onclick = () => deleteHandler(div.id)

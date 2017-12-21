@@ -10,10 +10,10 @@ import Data.StrMap (empty)
 import Data.Tuple (Tuple(..))
 import Presto.Core.Flow (APIRunner, Flow, PermissionCheckRunner, PermissionRunner(PermissionRunner), PermissionTakeRunner, callAPI, runUI)
 import Presto.Core.Language.Runtime.Interpreter (Runtime(..), UIRunner, run)
-import Presto.Core.Types.API (Headers(..))
+import Presto.Core.Types.API (Header(..), Headers(..))
 import Presto.Core.Types.Permission (PermissionStatus(..))
 import Remote as API
-import Runner (callAPI', mkNativeRequest, showUI')
+import Runner (callAPI', logAny, mkNativeRequest, showUI')
 import Types (MainScreen(..), MainScreenAction(..), MainScreenState(..))
 
 main = do
@@ -46,9 +46,9 @@ handleMainScreenAction action =
 
 addTodoFlow :: String -> Flow Unit
 addTodoFlow todoItem = do
-  response <- callAPI (Headers []) API.TodoReq
+  response <- callAPI (Headers [Header "Content-Type" "application/json"]) (API.AddTodoReq {todoItem: todoItem})
   case response of
     Left err -> pure unit
-    Right (API.TodoRes {response: id}) -> do
-      action <- runUI (MainScreen (MainScreenAddToList todoItem id))
+    Right (API.AddTodoRes {response: todoObj}) -> do
+      action <- runUI (MainScreen (MainScreenAddToList todoObj))
       handleMainScreenAction action
