@@ -47,6 +47,7 @@ handleMainScreenAction action =
   case action of
     MainScreenAddTodo todoItem -> addTodoFlow todoItem
     MainScreenDeleteTodo todoId -> deleteTodoFlow todoId
+    MainScreenUpdateTodo todoObj -> updateTodoFlow todoObj
     _ -> pure unit
 
 addTodoFlow :: String -> Flow Unit
@@ -66,3 +67,10 @@ deleteTodoFlow todoId = do
     Right (API.DeleteTodoRes {response: todoObj}) -> do
       action <- runUI (MainScreen (MainScreenDeleteFromList todoId))
       handleMainScreenAction action
+
+updateTodoFlow :: API.TodoItem -> Flow Unit
+updateTodoFlow todoObj = do
+  response <- callAPI (Headers [Header "Content-Type" "application/json"]) (API.UpdateTodoReq todoObj)
+  case response of
+    Left err -> pure unit
+    Right (API.UpdateTodoRes {response: todoObj}) -> pure unit

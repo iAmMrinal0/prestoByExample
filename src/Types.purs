@@ -23,6 +23,7 @@ data MainScreenAction
   = MainScreenAddTodo String
   | MainScreenAbortAction
   | MainScreenDeleteTodo Number
+  | MainScreenUpdateTodo TodoItem
 
 instance interactMainScreen :: Interact Error MainScreen MainScreenAction where
   interact = defaultInteract

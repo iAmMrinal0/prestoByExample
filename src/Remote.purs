@@ -70,3 +70,21 @@ instance encodeDeleteTodoReq :: Encode DeleteTodoReq where encode = defaultEncod
 
 derive instance genericDeleteTodoRes :: Generic DeleteTodoRes _
 instance decodeDeleteTodoRes :: Decode DeleteTodoRes where decode = defaultDecode
+
+newtype UpdateTodoReq = UpdateTodoReq TodoItem
+
+newtype UpdateTodoRes = UpdateTodoRes
+  { code :: Int
+  , status :: String
+  , response :: TodoItem
+  }
+
+instance makeUpdateTodoReq :: RestEndpoint UpdateTodoReq UpdateTodoRes where
+  makeRequest reqBody headers = defaultMakeRequest POST "http://localhost:3000/update" headers reqBody
+  decodeResponse body = defaultDecodeResponse body
+
+derive instance genericUpdateTodoReq :: Generic UpdateTodoReq _
+instance encodeUpdateTodoReq :: Encode UpdateTodoReq where encode = defaultEncode
+
+derive instance genericUpdateTodoRes :: Generic UpdateTodoRes _
+instance decodeUpdateTodoRes :: Decode UpdateTodoRes where decode = defaultDecode

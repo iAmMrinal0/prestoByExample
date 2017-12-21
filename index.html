@@ -42,16 +42,26 @@
       var event = {tag: "MainScreenDeleteTodo", contents: id}
       window.callBack(JSON.stringify(event))()
     }
+    function updateTodoHandler(id) {
+      var value = document.getElementById(id).value
+      var event = {tag: "MainScreenUpdateTodo", contents: {id:id, value: value}}
+      window.callBack(JSON.stringify(event))()
+    }
     function addToList(todoItem) {
       var div = document.createElement("div")
       div.id = "todoId" + todoItem.id
-      var p = document.createElement("p")
-      p.innerHTML = todoItem.value
+      var p = document.createElement("input")
+      p.id = todoItem.id
+      p.value = todoItem.value
       var button = document.createElement("button")
       button.innerHTML = "Delete"
       button.onclick = () => deleteTodoHandler(todoItem.id)
+      var button2 = document.createElement("button")
+      button2.innerHTML = "Update"
+      button2.onclick = () => updateTodoHandler(todoItem.id)
       div.appendChild(p)
       div.appendChild(button)
+      div.appendChild(button2)
       var divList = document.getElementById("todoValues")
       divList.appendChild(div)
     }
