@@ -7,22 +7,26 @@
         case "MainScreen":
           switch(state.contents.tag) {
             case "MainScreenInit":
-              init();
+              init(state.contents.contents);
               break;
             case "MainScreenAddToList":
               addToList(state.contents.contents);
+              break;
+            case "MainScreenDeleteFromList":
+              deleteHandler(state.contents.contents);
               break;
           }
           break;
       }
     }
-    function init() {
+    function init(todoItems) {
       document.body.innerHTML = `    <div id="todoInput">
         <input type="text" id="todoItem"/>
         <button onclick="addTodo()">Add Todo</button>
       </div>
-      <div id="todoValues">
-      </div>`
+          <div id="todoValues">
+          </div>`
+      todoItems.forEach(todo => addToList(todo))
     }
     function addTodo() {
       var inputData = document.getElementById('todoItem').value
@@ -31,8 +35,12 @@
     }
     function deleteHandler(value) {
       var divList = document.getElementById("todoValues")
-      var divToRemove = document.getElementById(value)
+      var divToRemove = document.getElementById("todoId"+value)
       divList.removeChild(divToRemove)
+    }
+    function deleteTodoHandler(id) {
+      var event = {tag: "MainScreenDeleteTodo", contents: id}
+      window.callBack(JSON.stringify(event))()
     }
     function addToList(todoItem) {
       var div = document.createElement("div")
@@ -41,7 +49,7 @@
       p.innerHTML = todoItem.value
       var button = document.createElement("button")
       button.innerHTML = "Delete"
-      button.onclick = () => deleteHandler(div.id)
+      button.onclick = () => deleteTodoHandler(todoItem.id)
       div.appendChild(p)
       div.appendChild(button)
       var divList = document.getElementById("todoValues")

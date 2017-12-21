@@ -50,3 +50,23 @@ instance encodeAddTodoReq :: Encode AddTodoReq where encode = defaultEncode
 
 derive instance genericAddTodoRes :: Generic AddTodoRes _
 instance decodeAddTodoRes :: Decode AddTodoRes where decode = defaultDecode
+
+newtype DeleteTodoReq = DeleteTodoReq
+  { id :: Number
+  }
+
+newtype DeleteTodoRes = DeleteTodoRes
+  { code :: Int
+  , status :: String
+  , response :: String
+  }
+
+instance makeDeleteTodoReq :: RestEndpoint DeleteTodoReq DeleteTodoRes where
+  makeRequest reqBody headers = defaultMakeRequest POST "http://localhost:3000/delete" headers reqBody
+  decodeResponse body = defaultDecodeResponse body
+
+derive instance genericDeleteTodoReq :: Generic DeleteTodoReq _
+instance encodeDeleteTodoReq :: Encode DeleteTodoReq where encode = defaultEncode
+
+derive instance genericDeleteTodoRes :: Generic DeleteTodoRes _
+instance decodeDeleteTodoRes :: Decode DeleteTodoRes where decode = defaultDecode

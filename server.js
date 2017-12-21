@@ -21,13 +21,12 @@ app.post('/update', (req, res) => {
 app.post('/delete', (req, res) => {
   let id = req.body.id
   todoObj = todoObj.filter(todo => todo.id != id)
-  res.send({})
+  res.send(JSON.stringify('Deleted'))
 })
 
 app.post('/add', (req, res) => {
   let date = Date.now()
   let item = req.body.todoItem
-  console.log('this is item: ', item, req.body)
   let todoValue = {id: date, value: item}
   todoObj.push(todoValue)
   res.send(todoValue)

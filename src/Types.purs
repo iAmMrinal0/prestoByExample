@@ -13,12 +13,16 @@ data MainScreen = MainScreen MainScreenState
 
 -- | These are the possible states our MainScreen could be in
 data MainScreenState
-  = MainScreenInit
+  = MainScreenInit (Array TodoItem)
   | MainScreenAbort
   | MainScreenAddToList TodoItem
+  | MainScreenDeleteFromList Number
 
 -- | Here we list the possible actions from the screen. For now we will just add few dummy actions
-data MainScreenAction = MainScreenAddTodo String | MainScreenAbortAction
+data MainScreenAction
+  = MainScreenAddTodo String
+  | MainScreenAbortAction
+  | MainScreenDeleteTodo Number
 
 instance interactMainScreen :: Interact Error MainScreen MainScreenAction where
   interact = defaultInteract

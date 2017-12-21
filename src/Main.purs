@@ -13,7 +13,7 @@ import Presto.Core.Language.Runtime.Interpreter (Runtime(..), UIRunner, run)
 import Presto.Core.Types.API (Header(..), Headers(..))
 import Presto.Core.Types.Permission (PermissionStatus(..))
 import Remote as API
-import Runner (callAPI', logAny, mkNativeRequest, showUI')
+import Runner (callAPI', mkNativeRequest, showUI')
 import Types (MainScreen(..), MainScreenAction(..), MainScreenState(..))
 
 main = do
@@ -35,13 +35,18 @@ main = do
 
 appFlow :: Flow Unit
 appFlow = do
-  action <- runUI (MainScreen MainScreenInit)
-  handleMainScreenAction action
+  response <- callAPI (Headers [Header "Content-Type" "application/json"]) API.TodoReq
+  case response of
+    Left err -> pure unit
+    Right (API.TodoRes {response: todoItems}) -> do
+      action <- runUI (MainScreen (MainScreenInit todoItems))
+      handleMainScreenAction action
 
 handleMainScreenAction :: MainScreenAction -> Flow Unit
 handleMainScreenAction action =
   case action of
     MainScreenAddTodo todoItem -> addTodoFlow todoItem
+    MainScreenDeleteTodo todoId -> deleteTodoFlow todoId
     _ -> pure unit
 
 addTodoFlow :: String -> Flow Unit
@@ -51,4 +56,13 @@ addTodoFlow todoItem = do
     Left err -> pure unit
     Right (API.AddTodoRes {response: todoObj}) -> do
       action <- runUI (MainScreen (MainScreenAddToList todoObj))
+      handleMainScreenAction action
+
+deleteTodoFlow :: Number -> Flow Unit
+deleteTodoFlow todoId = do
+  response <- callAPI (Headers [Header "Content-Type" "application/json"]) (API.DeleteTodoReq {id: todoId})
+  case response of
+    Left err -> pure unit
+    Right (API.DeleteTodoRes {response: todoObj}) -> do
+      action <- runUI (MainScreen (MainScreenDeleteFromList todoId))
       handleMainScreenAction action
