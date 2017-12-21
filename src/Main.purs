@@ -33,11 +33,15 @@ main = do
 appFlow :: Flow Unit
 appFlow = do
   action <- runUI (MainScreen MainScreenInit)
+  handleMainScreenAction action
+
+handleMainScreenAction :: MainScreenAction -> Flow Unit
+handleMainScreenAction action =
   case action of
     MainScreenAddTodo todoItem -> addTodoFlow todoItem
     _ -> pure unit
 
 addTodoFlow :: String -> Flow Unit
 addTodoFlow todoItem = do
-  _ <- runUI (MainScreen (MainScreenAddToList todoItem))
-  pure unit
+  action <- runUI (MainScreen (MainScreenAddToList todoItem))
+  handleMainScreenAction action
