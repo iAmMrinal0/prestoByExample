@@ -14,7 +14,7 @@ data MainScreen = MainScreen MainScreenState
 data MainScreenState
   = MainScreenInit
   | MainScreenAbort
-  | MainScreenAddToList String
+  | MainScreenAddToList String String
 
 -- | Here we list the possible actions from the screen. For now we will just add few dummy actions
 data MainScreenAction = MainScreenAddTodo String | MainScreenAbortAction

@@ -29,11 +29,23 @@
       var event = {tag: "MainScreenAddTodo", contents:inputData}
       window.callBack(JSON.stringify(event))()
     }
+    function deleteHandler(value) {
+      var divList = document.getElementById("todoValues")
+      var divToRemove = document.getElementById(value)
+      divList.removeChild(divToRemove)
+    }
     function addToList(todoItem) {
+      var div = document.createElement("div")
+      div.id = "todoId" + todoItem[1]
       var p = document.createElement("p")
-      p.innerHTML = todoItem
-      var div = document.getElementById("todoValues")
+      p.innerHTML = todoItem[0]
+      var button = document.createElement("button")
+      button.innerHTML = "Delete"
+      button.onclick = () => deleteHandler(div.id)
       div.appendChild(p)
+      div.appendChild(button)
+      var divList = document.getElementById("todoValues")
+      divList.appendChild(div)
     }
     window.showScreen = function (callBack, state) {
       window.callBack = callBack;

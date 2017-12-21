@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "purescript": "^0.11.7"
+    "purescript": "^0.11.7",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2"
   },
   "devDependencies": {},
   "scripts": {
-    "build": "pulp build --to index.js"
+    "build": "pulp build --to index.js",
+    "server": "node server.js"
   },
   "author": "Mrinal Purohit <mrinal.purohit@juspay.in>",
   "license": "MIT"
